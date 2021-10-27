@@ -1,0 +1,47 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  background: url("/background.jpg") center center no-repeat;
+}
+
+.auth_form {
+  background: #e3e9e9;
+  border-radius: 12px;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth_form > h3 {
+  margin: 0 0 20px 0;
+}
+
+.auth_form_button {
+  margin: 32px 0 0 0;
+}
+
+.tokens_form {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 62px;
+}
+
+.input_block:last-of-type {
+  margin: 0 0 0 72px;
+}
+
+.inputs {
+  padding: 20px;
+  display: flex;
+}

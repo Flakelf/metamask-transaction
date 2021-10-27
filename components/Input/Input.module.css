@@ -1,0 +1,15 @@
+.control {
+  padding: 8px;
+  border-radius: 10px;
+  height: 44px;
+  outline: none;
+  border: 1px solid grey;
+}
+
+.control:focus {
+  border: 1px solid #271d1d;
+}
+
+.control::placeholder {
+  color: grey;
+}

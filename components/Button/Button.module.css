@@ -1,0 +1,18 @@
+.control {
+  background: #12c9ff;
+  padding: 10px 40px;
+  border-radius: 12px;
+  min-width: 220px;
+  height: 40px;
+  color: white;
+  outline: none;
+  border-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control:hover {
+  background: #26a6cb;
+}

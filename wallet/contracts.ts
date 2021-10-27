@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import type { Web3Provider } from "@ethersproject/providers";
 import type { Signer } from "ethers";
 
-import type { TestTask as TestTaskInterface, Usdt } from "../contractTypes";
+import type { TestTask as TestTaskInterface } from "../contractTypes";
 
 import TEST_TASK_CONTRACT_JSON from "../ABI/testTask.json";
 import USDT_CONTRACT_JSON from "../ABI//usdt.json";
@@ -16,7 +16,7 @@ export let signer: Signer;
 
 if (typeof window !== "undefined") {
   provider = new ethers.providers.Web3Provider(window.ethereum);
-  provider.pollingInterval = 100;
+  // provider.pollingInterval = 100;
   signer = provider.getSigner();
 }
 

@@ -41,15 +41,14 @@ const Home: NextPage = () => {
         contractInstance.balance(account).then(console.log);
       }
 
-      contractInstance.on("Withdraw", (to: any, amount: any) => {
-        console.log("to", to);
-        console.log("amount", amount);
+      contractInstance.on("Transfer", (...args) => {
+        console.log("...args", args);
       });
 
-      contractInstance.on("Provide", (to: any, amount: any) => {
-        console.log("to", to);
-        console.log("amount", amount);
-      });
+      // contractInstance.on("Provide", (to: any, amount: any) => {
+      //   console.log("to", to);
+      //   console.log("amount", amount);
+      // });
     }
   };
 

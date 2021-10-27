@@ -34,4 +34,4 @@ yarn-error.log*
 .vercel
 
 # generated contract types by typechain
-/contractTypes
+/contractTypes/*

@@ -41,7 +41,7 @@ const Home: NextPage = () => {
         contractInstance.balance(account).then(console.log);
       }
 
-      contractInstance.on("Transfer", (...args) => {
+      contractInstance.on("Transfer", (...args: any) => {
         console.log("...args", args);
       });
 

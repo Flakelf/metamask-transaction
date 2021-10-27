@@ -36,14 +36,15 @@ const Home: NextPage = () => {
 
     try {
       await activate(injected);
-    } catch (e) {
-      console.log(e);
-    } finally {
+
       timeout = setTimeout(() => {
         setLogged((prevState) => !prevState);
         setLoading((prevState) => !prevState);
         clearTimeout(timeout);
       }, 2000);
+    } catch (e: any) {
+      alert(e.message);
+      setLoading((prevState) => !prevState);
     }
   };
 

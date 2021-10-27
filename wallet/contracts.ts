@@ -3,8 +3,6 @@ import { ethers } from "ethers";
 import type { Web3Provider } from "@ethersproject/providers";
 import type { Signer } from "ethers";
 
-import type { TestTask as TestTaskInterface } from "../contractTypes";
-
 import TEST_TASK_CONTRACT_JSON from "../ABI/testTask.json";
 import USDT_CONTRACT_JSON from "../ABI//usdt.json";
 
@@ -36,7 +34,7 @@ export const createTestTaskContract = () => {
     contractHashByName[TEST_TASK_CONTRACT],
     TEST_TASK_CONTRACT_JSON,
     signer
-  ) as TestTaskInterface;
+  );
 };
 
 // export const USDTContract = () => {

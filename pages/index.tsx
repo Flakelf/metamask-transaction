@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
+import type { TestTask as TestTaskInterface } from "../contractTypes";
 import type { NextPage } from "next";
 
 import { injected } from "../wallet/connectors";
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
 
   const handeClick = () => {
     if (window.ethereum) {
-      const contractInstance = createTestTaskContract();
+      const contractInstance = createTestTaskContract() as TestTaskInterface;
 
       if (account) {
         contractInstance.balance(account).then(console.log);

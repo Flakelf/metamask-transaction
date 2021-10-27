@@ -1,9 +1,11 @@
 .control {
+  width: 100%;
   padding: 8px;
   border-radius: 10px;
   height: 44px;
   outline: none;
   border: 1px solid grey;
+  font-size: 16px;
 }
 
 .control:focus {
@@ -12,4 +14,10 @@
 
 .control::placeholder {
   color: grey;
+}
+
+.hint {
+  font-size: 12px;
+  margin: 6px 0 0 0;
+  font-weight: bold;
 }

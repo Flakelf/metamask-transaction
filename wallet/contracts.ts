@@ -2,9 +2,13 @@ import { ethers } from "ethers";
 
 import type { Web3Provider } from "@ethersproject/providers";
 import type { Signer } from "ethers";
+import type {
+  TestTask as TestTaskContractInterface,
+  Usdt as USDTContractInterface,
+} from "../contractTypes";
 
 import TEST_TASK_CONTRACT_JSON from "../ABI/testTask.json";
-import USDT_CONTRACT_JSON from "../ABI//usdt.json";
+import USDT_CONTRACT_JSON from "../ABI/usdt.json";
 
 export const TEST_TASK_CONTRACT = "testTask";
 export const USDT_CONTRACT = "usdt";
@@ -34,12 +38,13 @@ export const createTestTaskContract = () => {
     contractHashByName[TEST_TASK_CONTRACT],
     TEST_TASK_CONTRACT_JSON,
     signer
-  );
+  ) as TestTaskContractInterface;
 };
 
-// export const USDTContract = () => {
-//   return new eth.Contract(
-//     contractsByName[USDT_CONTRACT],
-//     USDT_CONTRACT_JSON
-//   ) as Usdt;
-// };
+export const createUSDTContract = () => {
+  return new ethers.Contract(
+    contractHashByName[USDT_CONTRACT],
+    USDT_CONTRACT_JSON,
+    signer
+  ) as USDTContractInterface;
+};

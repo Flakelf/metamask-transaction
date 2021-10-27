@@ -38,11 +38,15 @@
   padding: 62px;
 }
 
-.input_block:last-of-type {
+.input_form:last-child {
   margin: 0 0 0 72px;
 }
 
 .inputs {
   padding: 20px;
   display: flex;
+}
+
+.form_button {
+  margin: 20px 0 0 0;
 }

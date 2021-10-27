@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import type { Web3Provider } from "@ethersproject/providers";
 import type { Signer } from "ethers";
 
-import type { TestTask as TestTaskInterface, Usdt } from "../conractTypes";
+import type { TestTask as TestTaskInterface, Usdt } from "../contractTypes";
 
 import TEST_TASK_CONTRACT_JSON from "../ABI/testTask.json";
 import USDT_CONTRACT_JSON from "../ABI//usdt.json";

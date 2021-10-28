@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import {
@@ -39,6 +39,8 @@ const Home: NextPage = () => {
   const [isProvideLoading, setProvideLoading] = useState(false);
   const [isWithdrawLoading, setWithdrawLoading] = useState(false);
 
+  const prevAccountRef = useRef<null | string>(null);
+
   let timeout: NodeJS.Timer;
 
   const handleLogin = async () => {
@@ -48,9 +50,6 @@ const Home: NextPage = () => {
       await activate(injected, (error) => {
         throw error;
       });
-
-      setLogged(true);
-      setLoading(false);
     } catch (e) {
       toast.error((e as Error).message);
       setLoading(false);
@@ -205,7 +204,17 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const exec = async () => {
+      if (prevAccountRef.current !== account) {
+        setLoading(true);
+      }
+
+      if (account) {
+        prevAccountRef.current = account;
+      }
+
       await fetchLogsAndBalance();
+      setLogged(true);
+      setLoading(false);
     };
 
     if (account) {

@@ -17,12 +17,15 @@ import { Input, Button, Block } from "../components";
 
 import styles from "../styles/App.module.css";
 
+const PROVIDE_AMOUNT = "provideAmount";
+const WITHDRAW_AMOUNT = "withdrawAmount";
+
 const Home: NextPage = () => {
   const { activate, account, deactivate } = useWeb3React<Web3Provider>();
 
   const [state, setState] = useState({
-    provideAmount: "",
-    withdrawAmount: "",
+    [PROVIDE_AMOUNT]: "",
+    [WITHDRAW_AMOUNT]: "",
   });
   const [balances, setBalances] = useState({
     provideBalance: "",
@@ -61,7 +64,7 @@ const Home: NextPage = () => {
       if (account) {
         const approvedContract = await USDTContractInstance.approve(
           TestContractInstance.address,
-          parseUnits(state.provideAmount, 18)
+          parseUnits(state[PROVIDE_AMOUNT], 18)
         );
 
         await approvedContract.wait();
@@ -83,7 +86,7 @@ const Home: NextPage = () => {
           throw new Error("You don't have enough tokens");
         }
 
-        await TestContractInstance.provide(parseUnits(state.provideAmount, 18));
+        await TestContractInstance.provide(allowance);
 
         // If we don't await three confirmations, we will be fetch old balance
         // Don't know how to solve this problem more elegant
@@ -92,6 +95,11 @@ const Home: NextPage = () => {
         toast.success("USDT successfully provided");
 
         await fetchLogsAndBalance();
+
+        setState((prevState) => ({
+          ...prevState,
+          [PROVIDE_AMOUNT]: "",
+        }));
       }
     } catch (e) {
       toast.error((e as Error).message);
@@ -108,7 +116,7 @@ const Home: NextPage = () => {
     try {
       if (account) {
         const withdrawnContract = await TestContractInstance.withdraw(
-          parseUnits(state.withdrawAmount, 18)
+          parseUnits(state[WITHDRAW_AMOUNT], 18)
         );
 
         // If we don't await three confirmations, we will be fetch old balance
@@ -118,6 +126,11 @@ const Home: NextPage = () => {
         toast.success("USDT successfully withdrawn");
 
         await fetchLogsAndBalance();
+
+        setState((prevState) => ({
+          ...prevState,
+          [WITHDRAW_AMOUNT]: "",
+        }));
       }
     } catch (e) {
       toast.error((e as Error).message);
@@ -239,8 +252,9 @@ const Home: NextPage = () => {
             >
               <h2>Provide Tokens</h2>
               <Input
+                value={state[PROVIDE_AMOUNT]}
                 placeholder="Amount"
-                name="provideAmount"
+                name={PROVIDE_AMOUNT}
                 onChange={handleChange}
                 disabled={isProvideLoading || isLoading}
                 hint={`Your balance: ${balances.provideBalance} USDT`}
@@ -259,8 +273,9 @@ const Home: NextPage = () => {
             >
               <h2>Withdraw Tokens</h2>
               <Input
+                value={state[WITHDRAW_AMOUNT]}
                 placeholder="Amount"
-                name="withdrawAmount"
+                name={WITHDRAW_AMOUNT}
                 onChange={handleChange}
                 disabled={isWithdrawLoading || isLoading}
                 hint={`Available: ${balances.withdrawBalance} USDT`}

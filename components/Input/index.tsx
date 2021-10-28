@@ -8,6 +8,7 @@ interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   disabled?: boolean;
+  value: string | number;
 }
 
 const Input: React.FC<InputProps> = ({ placeholder, hint, ...rest }) => (

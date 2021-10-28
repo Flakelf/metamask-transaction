@@ -18,3 +18,7 @@
 .control:hover {
   background: #26a6cb;
 }
+
+.control:disabled {
+  cursor: not-allowed;
+}

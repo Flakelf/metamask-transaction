@@ -253,7 +253,10 @@ const Home: NextPage = () => {
                 Provide
               </Button>
             </form>
-            <div className={styles.input_form}>
+            <form
+              className={styles.input_form}
+              onSubmit={(e) => e.preventDefault()}
+            >
               <h2>Withdraw Tokens</h2>
               <Input
                 placeholder="Amount"
@@ -269,7 +272,7 @@ const Home: NextPage = () => {
               >
                 Withdraw
               </Button>
-            </div>
+            </form>
           </div>
 
           <h5>Account id is {account}</h5>

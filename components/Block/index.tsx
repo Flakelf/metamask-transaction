@@ -1,4 +1,3 @@
-import { formatEther } from "@ethersproject/units";
 import { format } from "date-fns";
 
 import type { BigNumberish } from "ethers";
@@ -25,7 +24,7 @@ const Block: React.FC<BlockProps> = ({
     <div>{blockNumber}</div>
     <div>{event}</div>
     <div>{format(new Date(timestamp * 1000), "MM/dd/yyy h:mm:s aa")}</div>
-    <div>{formatEther(amount)} ETH</div>
+    <div>{amount} ETH</div>
     <div>Spender: {spender}</div>
   </div>
 );

@@ -18,15 +18,8 @@ export let signer: Signer;
 
 if (typeof window !== "undefined") {
   provider = new ethers.providers.Web3Provider(window.ethereum);
-  // provider.pollingInterval = 100;
   signer = provider.getSigner();
 }
-
-// export const formatBalance = (balance: string) =>
-//   ethers.utils.parseEther(balance);
-
-// console.log(wallet);
-// console.log(provider);
 
 const contractHashByName = {
   [TEST_TASK_CONTRACT]: "0x02cB34d293e74D3328321c0E32898e42D8594895",

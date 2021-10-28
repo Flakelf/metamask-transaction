@@ -7,6 +7,9 @@ import type { ExternalProvider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -23,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <Web3ReactProvider getLibrary={getLibrary}>
+        <ToastContainer />
         <Component {...pageProps} />
       </Web3ReactProvider>
     </React.Fragment>

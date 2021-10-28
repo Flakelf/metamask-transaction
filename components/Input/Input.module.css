@@ -16,6 +16,10 @@
   color: grey;
 }
 
+.control:disabled {
+  background: #d3d3d3;
+}
+
 .hint {
   font-size: 12px;
   margin: 6px 0 0 0;

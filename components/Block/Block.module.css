@@ -1,0 +1,10 @@
+.block {
+  display: flex;
+  border: 1px solid black;
+  padding: 4px;
+  margin: 4px;
+}
+
+.block > div:not(:first-child) {
+  margin: 0 0 0 8px;
+}

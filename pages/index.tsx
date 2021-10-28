@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-
+import { format } from "date-fns";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { formatEther, parseEther, parseUnits } from "@ethersproject/units";
@@ -11,7 +11,8 @@ import {
   createTestTaskContract,
   createUSDTContract,
 } from "../wallet/contracts";
-import { Input, Button } from "../components";
+
+import { Input, Button, Block } from "../components";
 
 import styles from "../styles/App.module.css";
 
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
     provideBalance: "",
     withdrawBalance: "",
   });
+  const [logs, setLogs] = useState([]);
   const [isLogged, setLogged] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -54,21 +56,32 @@ const Home: NextPage = () => {
     const TestContractInstance = createTestTaskContract();
     const USDTContractInstance = createUSDTContract();
 
-    console.log(
-      "parseUnits(state.provideAmount)",
-      parseUnits(state.provideAmount)
-    );
-
     try {
       if (account) {
-        const allowance = await TestContractInstance.provide(
+        const approvedContract = await USDTContractInstance.approve(
+          account,
           parseUnits(state.provideAmount)
         );
 
-        console.log(allowance);
+        await approvedContract.wait();
+
+        console.log(approvedContract);
+
+        // const allowance = await USDTContractInstance.allowance(
+        //   account,
+        //   TestContractInstance.address
+        // );
+
+        // console.log(allowance);
+
+        // const provideVar = await TestContractInstance.provide(
+        //   parseUnits(state.provideAmount)
+        // );
+
+        // console.log(provideVar);
       }
     } catch (e: any) {
-      alert(e.message);
+      console.log(e.message);
     } finally {
       setLoading((prevState) => !prevState);
     }
@@ -92,6 +105,36 @@ const Home: NextPage = () => {
         const provideBalance = await USDTContractInstance.balanceOf(account);
         const withdrawBalance = await TestContractInstance.balance(account);
 
+        const transactionsList = await USDTContractInstance.queryFilter({
+          address: TestContractInstance.address,
+        });
+
+        const last10Transactions = transactionsList.slice(
+          Math.max(transactionsList.length - 10, 1)
+        );
+
+        const last10TransactionsBlocks = await Promise.all(
+          last10Transactions.map((transaction) => transaction.getBlock())
+        );
+
+        const logsDataToRender: any = [];
+
+        last10Transactions.forEach((transaction) => {
+          logsDataToRender.push({
+            address: transaction.address,
+            // @ts-ignore
+            spender: transaction.args.spender,
+            blockNumber: transaction.blockNumber,
+            event: transaction.event,
+            amount: transaction.args[2],
+            timestamp: last10TransactionsBlocks.find(
+              (transactionBlock) =>
+                transactionBlock.number === transaction.blockNumber
+            )?.timestamp,
+          });
+        });
+
+        setLogs(logsDataToRender);
         setBalances({
           withdrawBalance: formatEther(withdrawBalance),
           provideBalance: formatEther(provideBalance),
@@ -110,14 +153,14 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       {isLogged ? (
         <div className={styles.tokens_form}>
-          {/* <button onClick={handeClick}>Do something</button> */}
-
           <div className={styles.inputs}>
-            <form className={styles.input_form}>
+            <form
+              className={styles.input_form}
+              onSubmit={(e) => e.preventDefault()}
+            >
               <h2>Provide Tokens</h2>
               <Input
                 placeholder="Amount"
-                type="number"
                 name="provideAmount"
                 onChange={handleChange}
                 disabled={isLoading}
@@ -135,7 +178,6 @@ const Home: NextPage = () => {
               <h2>Withdraw Tokens</h2>
               <Input
                 placeholder="Amount"
-                type="number"
                 name="withdrawAmount"
                 onChange={handleChange}
                 disabled={isLoading}
@@ -152,6 +194,11 @@ const Home: NextPage = () => {
           </div>
 
           <h5>Account id is {account}</h5>
+
+          {logs.length > 0 &&
+            logs.map((logElement: any) => (
+              <Block key={logElement.blockNumber} {...logElement} />
+            ))}
         </div>
       ) : (
         <div className={styles.auth_form}>

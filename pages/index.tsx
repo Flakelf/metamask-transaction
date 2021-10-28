@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
-import {
-  formatEther,
-  formatUnits,
-  parseEther,
-  parseUnits,
-} from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 
 import type { NextPage } from "next";
 
